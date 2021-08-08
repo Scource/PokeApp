@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'pokemons:registration' %}" enctype="multipart/form-data">
+{% csrf_token %}
+    <table>
+        <tr>
+            <td>{{ CreateForm.username.label_tag }}</td>
+            <td>{{ CreateForm.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ CreateForm.email.label_tag }}</td>
+            <td>{{ CreateForm.email }}</td>
+        </tr>
+        <tr>
+            <td>{{ CreateForm.password1.label_tag }}</td>
+            <td>{{ CreateForm.password1 }}</td>
+        </tr>
+        <tr>
+            <td>{{ CreateForm.password2.label_tag }}</td>
+            <td>{{ CreateForm.password2 }}</td>
+        </tr>
+
+    </table>
+<!-- {{CreateForm.as_p}} -->
+<input type="submit" value="Create new user">
+</form>
+
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="text-align:right;width:700px;margin-bottom:30px;">
+{% if not getDetailsData.exists_in_db %}
+    <button><a href="{% url 'pokemons:save_pokemon' getDetailsData.name %}">Add to favourites</a></button>
+{% else %}
+    <button><a href="{% url 'pokemons:delete_pokemon' getDetailsData.name %}">Remove from favourites</a></button>
+{% endif %}
+</div>
+<div>
+<div style="width:350px;float: left;">
+<b>Id:</b> {{ getDetailsData.id }} <br>
+<b>Name:</b> {{ getDetailsData.forms.0.name }} <br>
+<b>Height:</b> {{ getDetailsData.height }} <br>
+<b>Weight:</b> {{ getDetailsData.weight }} <br>
+
+<b>Type:</b>
+{% for type in getDetailsData.types %}
+    {{ type.type.name }} 
+{% endfor %}<br>
+
+<b>Abilities:</b>
+{% for ability in getDetailsData.abilities %}
+<li>{{ ability.ability.name }}</li>
+{% endfor %}<br>
+
+<b>Statistics:</b>
+<table border="1" cellpadding="3">
+    <tr>
+        <th>Name</th>
+        <th>Base stat</th>
+        <th>Effort</th>
+
+    </tr>
+    {% for stat in getDetailsData.stats %}
+    <tr>
+        <td>{{ stat.stat.name }}</td>
+        <td>{{ stat.base_stat }}</td>
+        <td>{{ stat.effort }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<b>Evolution chain</b><br>
+<a href="{% url 'pokemons:detail_view' getEvolutionChainData.species.name %}">{{ getEvolutionChainData.species.name }}</a> 
+
+{% if getEvolutionChainData.evolves_to.0.species.name %}
+    -> <a href="{% url 'pokemons:detail_view' getEvolutionChainData.evolves_to.0.species.name %}">{{ getEvolutionChainData.evolves_to.0.species.name }}</a> 
+        {% if getEvolutionChainData.evolves_to.0.evolves_to.0.species.name %}
+            -> <a href="{% url 'pokemons:detail_view' getEvolutionChainData.evolves_to.0.evolves_to.0.species.name %}">{{ getEvolutionChainData.evolves_to.0.evolves_to.0.species.name }}</a> 
+        {% endif %}
+{% endif %}
+</div>
+<div style="float: left;">
+    <img src="{{getDetailsData.sprites.front_default}}" width="200px"></div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+    <div>
+        <div style="margin-bottom:30px;">
+
+            {% if user.is_authenticated %}
+            Logged as <b>{{ request.user }}</b>
+            <button type="button" class="btn btn-light"><a href="{% url 'logout'%}?next={{request.path}}"> Log out
+                </a></button>
+            {% else %}
+            <button type="button" class="btn btn-light"><a href="{% url 'login'%}?next={{request.path}}"> Log in
+                </a></button>
+            <button type="button" class="btn btn-light"><a href="{% url 'pokemons:registration' %}"> Sign in
+                </a></button>
+            {% endif %}
+            <button type="button" class="btn btn-light"><a href="{% url 'pokemons:show_favourites' %}"> Favourite pokemons</a></button>
+            <button type="button" class="btn btn-light"><a href="{% url 'pokemons:pokemon_list' %}"> List of pokemons</a></button>
+        </div>
+
+        <div class="main">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

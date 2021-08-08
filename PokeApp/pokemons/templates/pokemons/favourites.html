@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Your favourite pokemons</h3>
+<table border="1" cellpadding="3">
+    <tr>
+        <th>Name</th>
+        <th>More Info</th>
+
+    </tr>
+    {% for fav in fav_pokemons %}
+    <tr>
+        <td>{{ fav.pokemon_name }}</td>
+        <td><a href="{% url 'pokemons:detail_view' fav.pokemon_name %}">More details</a></td>
+    {% endfor %}
+    </tr>
+
+</table>
+
+{% endblock %}
